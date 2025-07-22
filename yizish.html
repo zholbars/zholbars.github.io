@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>维吾尔语文字转换器 - ئۇيغۇر يېزىق ئالماشتۇرغۇچى</title>
+    <style>
+        /* 保留原有CSS变量定义 */
+        :root {
+            --primary-color: #2c6ecb;
+            --primary-light: #4a89dc;
+            --primary-dark: #1a56b3;
+            --secondary-color: #8e44ad;
+            --text-color: #333;
+            --text-light: #666;
+            --background-color: #f9f9f9;
+            --card-bg: white;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-hover: 0 8px 24px rgba(0,0,0,0.15);
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            /* 深色模式变量 */
+            --dark-background-color: #1a1a2e;
+            --dark-card-bg: #212134;
+            --dark-text-color: #e0e0e0;
+            --dark-text-light: #b0b0c0;
+        }
+        .dark-mode {
+            --background-color: var(--dark-background-color);
+            --card-bg: var(--dark-card-bg);
+            --text-color: var(--dark-text-color);
+            --text-light: var(--dark-text-light);
+        }
+    /* 保留所有响应式布局和主题切换样式 */
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        padding-bottom: 60px; /* 为固定页脚留出空间 */
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-md);
+        width: 100%;
+        box-sizing: border-box;
+    }
+    header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: var(--spacing-lg);
+        text-align: center;
+        margin-bottom: var(--spacing-xl);
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+        box-shadow: var(--shadow);
+    }
+    nav {
+        background-color: var(--card-bg);
+        padding: var(--spacing-md);
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-radius: var(--border-radius);
+        margin: 0 var(--spacing-md);
+    }
+    nav ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        gap: var(--spacing-lg);
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 0;
+    }
+    nav a {
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+    }
+    nav a:hover {
+        background-color: var(--primary-light);
+        color: white;
+    }
+    .content {
+        margin-top: var(--spacing-xl);
+        background: var(--card-bg);
+        padding: var(--spacing-xl);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+    }
+    .content:hover {
+        box-shadow: var(--shadow-hover);
+    }
+    .instruction {
+        margin-top: var(--spacing-xl);
+        padding: var(--spacing-xl);
+        background-color: #e8f4fd;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+    }
+    .instruction:hover {
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-3px);
+    }
+    pre {
+        background-color: #f8f9fa;
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius);
+        overflow-x: auto;
+        font-family: monospace;
+        font-size: 0.9rem;
+    }
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        padding: var(--spacing-md);
+        color: var(--text-color); /* 修改为文本颜色变量 */
+        font-size: 0.9rem;
+    }
+    /* 转换器特有样式 */
+    .card {
+        background: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        padding: var(--spacing-xl);
+        margin: 0 auto;
+        max-width: 800px;
+        width: 100%;
+        box-sizing: border-box;
+        transition: var(--transition);
+        transform: translateY(0);
+    }
+    .card:hover {
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-5px);
+    }
+    select, textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: var(--transition);
+        box-sizing: border-box;
+    }
+    select:focus, textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(44, 110, 203, 0.2);
+    }
+    textarea {
+        height: 200px;
+        resize: vertical;
+        border-left: 4px solid var(--primary-color);
+    }
+    button {
+        background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: clamp(0.75rem, 3vw, 1rem) clamp(1.5rem, 5vw, 2rem);
+        font-size: clamp(1rem, 3vw, 1.25rem);
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+    }
+    button:active {
+        transform: translateY(0);
+    }
+    .converter-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+        margin-bottom: var(--spacing-lg);
+    }
+    @media (min-width: 768px) {
+        .converter-container {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+    .dark-mode select,
+    .dark-mode textarea {
+        background-color: var(--dark-card-bg);
+        color: var(--dark-text-color);
+        border-color: var(--dark-text-light);
+    }
+
+    .dark-mode select:focus,
+    .dark-mode textarea:focus {
+        border-color: var(--primary-light);
+        box-shadow: 0 0 0 3px rgba(44, 110, 203, 0.2);
+    }
+
+    .dark-mode button {
+        background: linear-gradient(135deg, var(--primary-dark), var(--secondary-color));
+    }
+    select, textarea {
+        font-family: 'CustomFont', sans-serif;
+        src: url('font.ttf') format('truetype');
+    }
+
+@font-face {
+    font-family: 'CustomFont';
+    src: url('font.ttf') format('truetype');
+}
+
+@media (min-width: 768px) {
+    .converter-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+.dark-mode select,
+.dark-mode textarea {
+    background-color: var(--dark-card-bg);
+    color: var(--dark-text-color);
+    border-color: var(--dark-text-light);
+}
+
+.dark-mode select:focus,
+.dark-mode textarea:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(44, 110, 203, 0.2);
+}
+
+.dark-mode button {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-color));
+}
+</style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="lang-zh">维吾尔语文字转换器</h1>
+            <h1 class="lang-en">Uyghur Text Converter</h1>
+        </div>
+    </header>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html" class="lang-zh">首页</a><a href="index.html" class="lang-en">Home</a></li>
+                <li><a href="yizish.html" class="lang-zh">维吾尔语文字转换器</a><a href="yizish.html" class="lang-en">Uyghur Text Converter</a></li>
+                <li><a href="articles.html" class="lang-zh">文章列表</a><a href="articles.html" class="lang-en">Articles</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="card slide-up">
+            <h1 class="lang-zh fade-in">维吾尔语文字转换器</h1>
+            <h1 class="lang-en fade-in">Uyghur Text Converter</h1>
+            <div class="converter-container">
+                <div class="fade-in" style="animation-delay: 0.1s;">
+                    <label class="lang-zh">源脚本:</label>
+                    <label class="lang-en">Source Script:</label>
+                    <select id="source" class="form-control">
+                        <option value="ULS" class="lang-zh">维吾尔拉丁字母</option>
+                        <option value="ULS" class="lang-en">Uyghur Latin alphabet</option>
+                        <option value="UYS" class="lang-zh">维吾尔新文字</option>
+                        <option value="UYS" class="lang-en">Uyghur New alphabet</option>
+                        <option value="CPS" class="lang-zh">汉语拼音字母</option>
+                        <option value="CPS" class="lang-en">Chinese Pinyin alphabet</option>
+                        <option value="UAS" class="lang-zh">维吾尔阿拉伯字母</option>
+                        <option value="UAS" class="lang-en">Uyghur Arabic alphabet</option>
+                        <option value="CTS" class="lang-zh">通用突厥字母</option>
+                        <option value="CTS" class="lang-en">Common Turkic alphabet</option>
+                        <option value="UCS" class="lang-zh">维吾尔西里尔字母</option>
+                        <option value="UCS" class="lang-en">Uyghur Cyrillic alphabet</option>
+                    </select>
+                </div>
+                <div class="fade-in" style="animation-delay: 0.2s;">
+                    <label class="lang-zh">目标脚本:</label>
+                    <label class="lang-en">Target Script:</label>
+                    <select id="target" class="form-control">
+                        <option value="ULS" class="lang-zh">维吾尔拉丁字母</option>
+                        <option value="ULS" class="lang-en">Uyghur Latin alphabet</option>
+                        <option value="UYS" class="lang-zh">维吾尔新文字</option>
+                        <option value="UYS" class="lang-en">Uyghur New alphabet</option>
+                        <option value="CPS" class="lang-zh">汉语拼音字母</option>
+                        <option value="CPS" class="lang-en">Chinese Pinyin alphabet</option>
+                        <option value="UAS" class="lang-zh">维吾尔阿拉伯字母</option>
+                        <option value="UAS" class="lang-en">Uyghur Arabic alphabet</option>
+                        <option value="CTS" class="lang-zh">通用突厥字母</option>
+                        <option value="CTS" class="lang-en">Common Turkic alphabet</option>
+                        <option value="UCS" class="lang-zh">维吾尔西里尔字母</option>
+                        <option value="UCS" class="lang-en">Uyghur Cyrillic alphabet</option>
+                    </select>
+                </div>
+            </div>
+            <div class="fade-in" style="animation-delay: 0.3s;">
+                <label class="lang-zh">输入文本:</label>
+                <label class="lang-en">Input Text:</label>
+                <textarea id="input"></textarea>
+            </div>
+            <div class="fade-in" style="animation-delay: 0.4s;">
+                <button onclick="convert()" id="convertBtn" class="lang-zh">转换</button>
+                <button onclick="convert()" id="convertBtn" class="lang-en">Convert</button>
+            </div>
+            <div class="fade-in" style="animation-delay: 0.5s;">
+                <label class="lang-zh">结果:</label>
+                <label class="lang-en">Result:</label>
+                <textarea id="result"></textarea>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 页面加载时检查保存的语言偏好
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang) {
+                switchLanguage(savedLang);
+            } else {
+                // 默认使用中文
+                switchLanguage('zh');
+            }
+        });
+    
+        function switchLanguage(lang) {
+            // 隐藏所有语言元素
+            document.querySelectorAll('.lang-zh, .lang-en').forEach(el => {
+                el.style.display = 'none';
+            });
+            // 显示选中语言元素
+            document.querySelectorAll('.lang-' + lang).forEach(el => {
+                el.style.display = el.tagName === 'A' ? 'inline' : 'block';
+            });
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+            
+            // 更新按钮选中状态
+            document.querySelectorAll('.lang-switch button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-switch button[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+            
+            // 保存语言偏好到本地存储
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // 脚本转换核心逻辑 (保留原有功能)
+        class UgMultiScriptConverter {
+            constructor() {
+                // 添加正则特殊字符转义方法
+                this.escapeRegExp = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                // 字符映射表 (从Python移植)
+                this.__uas_group1 = ['ا', 'ە', 'ب', 'پ', 'ت', 'ج', 'چ', 'خ', 'د', 'ر', 'ز', 'ژ', 'س', 'ش', 'ف', 'ڭ', 'ل', 'لا', 'م', 'ھ', 'و', 'ۇ', 'ۆ', 'ۈ', 'ۋ', 'ې', 'ى', 'ي', 'ق', 'ك', 'گ', 'ن', 'غ', '؟', '،', '؛', '٭'];
+                this.__cts_group1 = ['a', 'e', 'b', 'p', 't', 'c', 'ç', 'x', 'd', 'r', 'z', 'j', 's', 'ş', 'f', 'ñ', 'l', 'la', 'm', 'h', 'o', 'u', 'ö', 'ü', 'v', 'é', 'i', 'y', 'q', 'k', 'g', 'n', 'ğ', '?', ',', ';', '*'];
+                this.__ucs_group1 = ['а', 'ә', 'б', 'п', 'т', 'җ', 'ч', 'х', 'д', 'р', 'з', 'ж', 'с', 'ш', 'ф', 'ң', 'л', 'ла', 'м', 'һ', 'о', 'у', 'ө', 'ү', 'в', 'е', 'и', 'й', 'қ', 'к', 'г', 'н', 'ғ', '?', ',', ';', '*'];
+                // 添加CPS(汉语拼音)映射表
+                this.__cps_group1 = ['a', 'e', 'b', 'p', 't', 'j', 'q', 'x', 'd', 'r', 'z', 'zh', 's', 'sh', 'f', 'ng', 'l', 'la', 'm', 'h', 'o', 'u', 'uo', 'ü', 'w', 'ie', 'i', 'y', 'qu', 'k', 'g', 'n', 'gh', '?', ',', ';', '*'];
+            }
+
+            convert(text, sourceScript, targetScript) {
+                // 验证脚本类型
+                const validScripts = ['ULS', 'UYS', 'CPS', 'UAS', 'CTS', 'UCS'];
+                if (!validScripts.includes(sourceScript)) {
+                    throw new Error(`无效的脚本类型: ${sourceScript}`);
+                }
+                if (!validScripts.includes(targetScript)) {
+                    throw new Error(`无效的脚本类型: ${targetScript}`);
+                }
+                
+                // 相同脚本直接返回
+                if (sourceScript === targetScript) return text;
+                
+                // 构建转换方法名 (如 "UAS2CTS")
+                const methodName = `${sourceScript}2${targetScript}`;
+                if (typeof this[methodName] === 'function') {
+                    return this[methodName](text);
+                }
+                
+                // 通过CTS中转转换
+                if (sourceScript !== 'CTS' && targetScript !== 'CTS') {
+                    const sourceToCTS = `${sourceScript}2CTS`;
+                    const ctsToTarget = `CTS2${targetScript}`;
+                    if (typeof this[sourceToCTS] === 'function' && typeof this[ctsToTarget] === 'function') {
+                        text = this[sourceToCTS](text);
+                        return this[ctsToTarget](text);
+                    }
+                }
+                
+                throw new Error(`不支持从${sourceScript}到${targetScript}的转换`);
+            }
+
+            // 字符映射替换
+            _replaceViaTable(text, tab1, tab2) {
+                tab1.forEach((from, index) => {
+                    // 对特殊字符进行转义
+                    const escapedFrom = this.escapeRegExp(from);
+                    text = text.replace(new RegExp(escapedFrom, 'g'), tab2[index]);
+                });
+                return text;
+            }
+
+            // UAS转CTS
+            UAS2CTS(text) {
+                text = this._replaceViaTable(text, this.__uas_group1, this.__cts_group1);
+                return this.__reviseCTS(text);
+            }
+
+            // 修正CTS文本
+            __reviseCTS(text) {
+                // 修复零宽断言语法，将Unicode字符改为十六进制表示
+                text = text.replace(/(?<=[^a-zA-Zöüçşñğé]|^)ئ/g, '');
+                text = text.replace(/ئ/g, "'");
+                return text;
+            }
+
+            // CTS转UAS
+            CTS2UAS(text) {
+                // 修复元音前加ئ的正则表达式
+                text = text.replace(/(?<=[^bptcçxdrzjsşfñlmhvyqkgnğ]|^)([aeéiouöü])/g, 'ئ$1');
+                text = this._replaceViaTable(text, this.__cts_group1, this.__uas_group1);
+                return text.replace(/'/g, '');
+            }
+
+            // UCS转CTS
+            UCS2CTS(text) {
+                return this._replaceViaTable(text.toLowerCase(), this.__ucs_group1, this.__cts_group1)
+                    .replace(/я/g, 'ya').replace(/ю/g, 'yu');
+            }
+
+            // CTS转UCS
+            CTS2UCS(text) {
+                return this._replaceViaTable(text.toLowerCase(), this.__cts_group1, this.__ucs_group1)
+                    .replace(/ya/g, 'я').replace(/yu/g, 'ю');
+            }
+
+            // ULS转CTS
+            ULS2CTS(text) {
+                return text.toLowerCase()
+                    // 先处理多字符组合
+                    .replace(/ng/g, 'ñ')
+                    .replace(/n'g/g, 'ng')
+                    .replace(/'ng/g, 'ñ')
+                    .replace(/ch/g, 'ç')
+                    .replace(/zh/g, 'j')
+                    .replace(/sh/g, 'ş')
+                    .replace(/'gh/g, 'ğ')
+                    .replace(/gh/g, 'ğ')
+                    // 再处理单字符
+                    .replace(/j/g, 'c')
+                    .replace(/w/g, 'v');
+            }
+
+            // CTS转ULS
+            CTS2ULS(text) {
+                return text.toLowerCase()
+                    .replace(/ñ/g, 'ng')
+                    .replace(/j/g, 'zh')
+                    .replace(/c/g, 'j')
+                    .replace(/ç/g, 'ch')
+                    .replace(/ş/g, 'sh')
+                    .replace(/ğ/g, 'gh')
+                    .replace(/v/g, 'w');
+            }
+
+            // UYS转CTS
+            UYS2CTS(text) {
+                return text.toLowerCase()
+                    .replace(/e/g, 'ə')
+                    .replace(/j/g, 'ⱬ')
+                    .replace(/c/g, 'j')
+                    .replace(/q/g, 'ⱪ')
+                    .replace(/ç/g, 'q')
+                    .replace(/h/g, 'ⱨ')
+                    .replace(/x/g, 'h')
+                    .replace(/ş/g, 'x')
+                    .replace(/ñ/g, 'ng')
+                    .replace(/ö/g, 'ø')
+                    .replace(/v/g, 'w')
+                    .replace(/é/g, 'e');
+            }
+
+            // CTS转UYS
+            CTS2UYS(text) {
+                return text.toLowerCase()
+                    .replace(/ə/g, 'e')
+                    .replace(/ⱬ/g, 'j')
+                    .replace(/j/g, 'c')
+                    .replace(/ⱪ/g, 'q')
+                    .replace(/q/g, 'ç')
+                    .replace(/ⱨ/g, 'h')
+                    .replace(/h/g, 'x')
+                    .replace(/x/g, 'ş')
+                    .replace(/ng/g, 'ñ')
+                    .replace(/ø/g, 'ö')
+                    .replace(/w/g, 'v')
+                    .replace(/e/g, 'é');
+            }
+        }
+
+        // 初始化转换器
+        const converter = new UgMultiScriptConverter();
+
+        // 转换函数
+        function convert() {
+            const source = document.getElementById('source').value;
+            const target = document.getElementById('target').value;
+            const input = document.getElementById('input').value;
+            
+            try {
+                // 验证输入
+                if (!input.trim()) {
+                    throw new Error('输入文本不能为空');
+                }
+                
+                const result = converter.convert(input, source, target);
+                document.getElementById('result').value = result;
+            } catch (error) {
+                document.getElementById('result').value = error.message;
+            }
+        }
+    </script>
+
+    <script>
+        // 主题切换功能
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+            const isDarkMode = document.documentElement.classList.contains('dark-mode');
+            localStorage.setItem('preferredTheme', isDarkMode ? 'dark' : 'light');
+            document.querySelector('.theme-switch').textContent = isDarkMode ? '☀️' : '🌙';
+        }
+
+        // 页面加载时应用保存的主题
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('preferredTheme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-mode');
+                document.querySelector('.theme-switch').textContent = '☀️';
+            }
+        });
+    </script>
+</html>
+

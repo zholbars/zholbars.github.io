@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="lang-zh">文章列表</title>
+    <title class="lang-en">Articles</title>
+    <script src="marked.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c6ecb;
+            --primary-light: #4a89dc;
+            --primary-dark: #1a56b3;
+            --secondary-color: #8e44ad;
+            --text-color: #333;
+            --text-light: #666;
+            --background-color: #f9f9f9;
+            --card-bg: white;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-hover: 0 8px 24px rgba(0,0,0,0.15);
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            --dark-background-color: #1a1a2e;
+            --dark-card-bg: #212134;
+            --dark-text-color: #e0e0e0;
+            --dark-text-light: #b0b0c0;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-lg);
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        nav {
+            background-color: var(--card-bg);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-radius: var(--border-radius);
+            margin: 0 var(--spacing-md);
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        nav a:hover {
+            background-color: var(--primary-light);
+            color: white;
+        }
+        .content {
+            margin-top: var(--spacing-xl);
+            background: var(--card-bg);
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .article-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            background: var(--card-bg);
+        }
+        .article-item h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: var(--spacing-md);
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: var(--spacing-sm);
+            }
+            nav a {
+                display: block;
+                padding: var(--spacing-md);
+                width: 100%;
+                text-align: center;
+            }
+        }
+        /* 语言切换样式 */
+        .lang-switch {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .lang-switch button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            background-color: #e0e0e0;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .lang-switch button:hover {
+            background-color: var(--primary-light);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .lang-switch button.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* 深色模式样式 */
+        .dark-mode {
+            --background-color: var(--dark-background-color);
+            --card-bg: var(--dark-card-bg);
+            --text-color: var(--dark-text-color);
+            --text-light: var(--dark-text-light);
+        }
+
+        .theme-switch {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-switch:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="lang-zh">文章列表</h1>
+            <h1 class="lang-en">Articles</h1>
+        </div>
+    </header>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html" class="lang-zh">首页</a><a href="index.html" class="lang-en">Home</a></li>
+                <li><a href="yizish.html" class="lang-zh">维吾尔语文字转换器</a><a href="yizish.html" class="lang-en">Uyghur Text Converter</a></li>
+                <li><a href="articles.html" class="lang-zh">文章列表</a><a href="articles.html" class="lang-en">Articles</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="content">
+            <div class="lang-switch">
+                <button onclick="switchLanguage('zh')" class="active">中文</button>
+                <button onclick="switchLanguage('en')">English</button>
+                <button class="theme-switch" onclick="toggleTheme()">🌙</button>
+            </div>
+            
+            <div class="article-list" id="articleContainer">
+                <!-- 文章将在这里动态加载 -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 主题切换功能
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark-mode');
+            const isDarkMode = document.documentElement.classList.contains('dark-mode');
+            localStorage.setItem('preferredTheme', isDarkMode ? 'dark' : 'light');
+            document.querySelector('.theme-switch').textContent = isDarkMode ? '☀️' : '🌙';
+        }
+
+        // 语言切换功能
+        function switchLanguage(lang) {
+            document.querySelectorAll('.lang-zh, .lang-en').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('.lang-' + lang).forEach(el => {
+                el.style.display = el.tagName === 'A' ? 'inline' : 'block';
+            });
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+            
+            // 更新按钮选中状态
+            document.querySelectorAll('.lang-switch button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-switch button[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+            
+            // 保存语言偏好到本地存储
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // 页面加载时应用保存的主题和语言
+        document.addEventListener('DOMContentLoaded', function() {
+            // 应用主题
+            const savedTheme = localStorage.getItem('preferredTheme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark-mode');
+                document.querySelector('.theme-switch').textContent = '☀️';
+            }
+            
+            // 应用语言
+            const savedLang = localStorage.getItem('preferredLanguage') || 'zh';
+            switchLanguage(savedLang);
+            
+            // 加载文章
+            loadArticles();
+        });
+
+        // 加载文章列表
+        async function loadArticles() {
+            const response = await fetch('articles/');
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            
+            const links = Array.from(doc.querySelectorAll('a'))
+                .filter(a => a.href.endsWith('.md'));
+            
+            const container = document.getElementById('articleContainer');
+            
+            for (const link of links) {
+                const articleResponse = await fetch(link.href);
+                const markdownContent = await articleResponse.text();
+                
+                // 提取元数据
+                const meta = extractMetadata(markdownContent);
+                
+                const articleItem = document.createElement('div');
+                articleItem.className = 'article-item';
+                articleItem.innerHTML = `
+                    <h2><a href="article_reader.html?file=${encodeURIComponent(link.href)}">${meta.title || link.href.split('/').pop().replace('.md', '')}</a></h2>
+                    <div class="article-meta">
+                        <span>${meta.date || '无日期'}</span>
+                        <span>${meta.author || '匿名'}</span>
+                        <div class="tags">${meta.tags ? meta.tags.split(',').map(tag => `<span class="tag">${tag.trim()}</span>`).join('') : ''}</div>
+                    </div>
+                `;
+                
+                container.appendChild(articleItem);
+            }
+        }
+
+        function extractMetadata(content) {
+            const meta = {};
+            const lines = content.split('\n');
+            
+            for (const line of lines) {
+                if (line.startsWith('title:')) meta.title = line.replace('title:', '').trim();
+                if (line.startsWith('date:')) meta.date = line.replace('date:', '').trim();
+                if (line.startsWith('author:')) meta.author = line.replace('author:', '').trim();
+                if (line.startsWith('tags:')) meta.tags = line.replace('tags:', '').trim();
+            }
+            
+            return meta;
+        }
+    </script>
+</body>
+</html>

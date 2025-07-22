@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>维吾尔语学习网站 - ئۇيغۇر تىلى ئوقۇش ویبسایتى</title>
+    <style>
+        :root {
+            --primary-color: #2c6ecb;
+            --primary-light: #4a89dc;
+            --primary-dark: #1a56b3;
+            --secondary-color: #8e44ad;
+            --text-color: #333;
+            --text-light: #666;
+            --background-color: #f9f9f9;
+            --card-bg: white;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-hover: 0 8px 24px rgba(0,0,0,0.15);
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            /* 深色模式变量 */
+            --dark-background-color: #1a1a2e;
+            --dark-card-bg: #212134;
+            --dark-text-color: #e0e0e0;
+            --dark-text-light: #b0b0c0;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 60px; /* 为固定页脚留出空间 */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-lg);
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        nav {
+            background-color: var(--card-bg);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-radius: var(--border-radius);
+            margin: 0 var(--spacing-md);
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        nav a:hover {
+            background-color: var(--primary-light);
+            color: white;
+        }
+        .content {
+            margin-top: var(--spacing-xl);
+            background: var(--card-bg);
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .welcome-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 8px;
+        }
+
+        .lang-switch button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            background-color: #e0e0e0;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .lang-switch button:hover {
+            background-color: var(--primary-light);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .lang-switch button.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .lang-switch button:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        /* 深色模式样式 */
+        .dark-mode {
+            --background-color: var(--dark-background-color);
+            --card-bg: var(--dark-card-bg);
+            --text-color: var(--dark-text-color);
+            --text-light: var(--dark-text-light);
+        }
+        .instruction {
+            margin-top: var(--spacing-xl);
+            padding: var(--spacing-xl);
+            background-color: var(--card-bg); /* 修改为使用变量 */
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .instruction:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px);
+        }
+        pre {
+            background-color: var(--card-bg); /* 修改为使用变量 */
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* 深色模式样式 */
+        .dark-mode {
+            --background-color: var(--dark-background-color);
+            --card-bg: var(--dark-card-bg);
+            --text-color: var(--dark-text-color);
+            --text-light: var(--dark-text-light);
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: var(--spacing-md);
+            color: var(--text-color); /* 修改为文本颜色变量 */
+            font-size: 0.9rem;
+        }
+        /* 响应式设计 - 增强版 */
+        /* 大屏桌面 */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+                padding: 0 var(--spacing-lg);
+            }
+            .content, .instruction {
+                padding: var(--spacing-xl) calc(var(--spacing-xl) * 1.5);
+            }
+        }
+        /* 平板设备 */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .container {
+                max-width: 960px;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+        /* 大屏手机 */
+        @media (max-width: 768px) and (min-width: 481px) {
+            :root {
+                --spacing-sm: 6px;
+                --spacing-md: 12px;
+                --spacing-lg: 18px;
+                --spacing-xl: 24px;
+            }
+            header h1 {
+                font-size: 1.5rem;
+            }
+            .content, .instruction {
+                padding: var(--spacing-lg);
+            }
+        }
+        /* 小屏手机 */
+        @media (max-width: 480px) {
+            :root {
+                --spacing-sm: 4px;
+                --spacing-md: 8px;
+                --spacing-lg: 12px;
+                --spacing-xl: 16px;
+                --border-radius: 8px;
+            }
+            header {
+                padding: var(--spacing-md);
+                margin-bottom: var(--spacing-lg);
+            }
+            header h1 {
+                font-size: 1.3rem;
+                margin: var(--spacing-md) 0;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: var(--spacing-sm);
+            }
+            nav a {
+                display: block;
+                padding: var(--spacing-md);
+                width: 100%;
+                text-align: center;
+            }
+            .content, .instruction {
+                padding: var(--spacing-md);
+                margin-top: var(--spacing-lg);
+            }
+            pre {
+                font-size: 0.8rem;
+                padding: var(--spacing-sm);
+            }
+            footer {
+                font-size: 0.8rem;
+                padding: var(--spacing-sm);
+            }
+        }
+        @media (max-width: 768px) {
+            :root {
+                --spacing-sm: 4px;
+                --spacing-md: 8px;
+                --spacing-lg: 16px;
+                --spacing-xl: 24px;
+            }
+            nav ul {
+                gap: var(--spacing-md);
+            }
+            .lang-switch {
+                position: static;
+                justify-content: center;
+                margin-bottom: var(--spacing-md);
+            }
+            header {
+                padding: var(--spacing-md);
+                margin-bottom: var(--spacing-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="lang-zh">维吾尔语学习网站</h1>
+            <h1 class="lang-en">Uyghur Learning Website</h1>
+        </div>
+    </header>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html" class="lang-zh">首页</a><a href="index.html" class="lang-en">Home</a></li>
+                <li><a href="yizish.html" class="lang-zh">维吾尔语文字转换器</a><a href="yizish.html" class="lang-en">Uyghur Text Converter</a></li>
+                <li><a href="articles.html" class="lang-zh">文章列表</a><a href="articles.html" class="lang-en">Articles</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main class="container">
+        <div class="content">
+            <div class="welcome-header">
+                <h2 class="lang-zh">欢迎来到维吾尔语学习网站</h2>
+                <h2 class="lang-en">Welcome to Uyghur Learning Website</h2>
+                <div class="lang-switch">
+                    <button onclick="switchLanguage('zh')" class="active">中文</button>
+                    <button onclick="switchLanguage('en')">English</button>
+                    <button class="theme-switch" onclick="toggleTheme()">🌙</button>
+                </div>
+            </div>
+            <p class="lang-zh">这里是学习维吾尔语的资源平台，您可以通过以下指南添加新的学习文章和资料。<a href="https://space.bilibili.com/1967814328?spm_id_from=333.788.0.0">B站主页</a></p>
+            <p class="lang-en">This is a resource platform for learning Uyghur. You can add new learning articles and materials using the guide below.<a href="https://space.bilibili.com/1967814328?spm_id_from=333.788.0.0">My BILIBILI</a></p>
+        </div>
+
+        <script>
+            // 主题切换功能
+            function toggleTheme() {
+                document.documentElement.classList.toggle('dark-mode');
+                const isDarkMode = document.documentElement.classList.contains('dark-mode');
+                localStorage.setItem('preferredTheme', isDarkMode ? 'dark' : 'light');
+                document.querySelector('.theme-switch').textContent = isDarkMode ? '☀️' : '🌙';
+            }
+
+            // 页面加载时应用保存的主题
+            document.addEventListener('DOMContentLoaded', function() {
+                const savedTheme = localStorage.getItem('preferredTheme');
+                if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark-mode');
+                    document.querySelector('.theme-switch').textContent = '☀️';
+                }
+            });
+        </script>
+        <div id="instructions" class="instruction">
+            <h3 class="lang-zh">如何添加新文章</h3>
+            <h3 class="lang-en">How to Add New Articles</h3>
+            
+            <div class="lang-zh">
+                <ol>
+                    <li>在Web目录中创建新的HTML文件（例如：lesson1.html）</li>
+                    <li>使用以下模板编写文章内容：
+                        <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="zh-CN"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;文章标题 - مەقۇل نامى&lt;/title&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- 文章内容 --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </li>
+                    <li>在导航栏中添加链接：编辑index.html文件，在nav &gt; ul中添加新的li元素</li>
+                </ol>
+            </div>
+
+            <div class="lang-en">
+                <ol>
+                    <li>Create a new HTML file in the Web directory (e.g., lesson1.html)</li>
+                    <li>Write article content using this template:
+                        <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Article Title - مەقۇل نامى&lt;/title&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Article content --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </li>
+                    <li>Add a link in the navigation bar: Edit index.html and add a new li element in nav &gt; ul</li>
+                </ol>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 删除旧的HTML文章加载代码
+        
+        // 新的Markdown文章加载逻辑
+        async function loadArticles() {
+            const response = await fetch('articles.json');
+            const articles = await response.json();
+            
+            const articlesList = document.getElementById('articles-list');
+            if (articles.length > 0) {
+                // ... 创建标题代码保持不变 ...
+                
+                const list = document.createElement('ul');
+                list.className = 'articles-grid';
+                
+                for (const article of articles) {
+                    const item = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `article.html?file=${article.file}`;
+                    
+                    const zhLink = document.createElement('span');
+                    zhLink.className = 'lang-zh';
+                    zhLink.textContent = article.zhTitle;
+                    
+                    const enLink = document.createElement('span');
+                    enLink.className = 'lang-en';
+                    enLink.textContent = article.enTitle;
+                    
+                    link.append(zhLink, enLink);
+                    item.appendChild(link);
+                    list.appendChild(item);
+                }
+                
+                articlesList.appendChild(list);
+            }
+        }
+        // 初始化时加载文章
+        document.addEventListener('DOMContentLoaded', loadArticles);
+        // 页面加载时检查保存的语言偏好
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang) {
+                switchLanguage(savedLang);
+            } else {
+                // 默认使用中文
+                switchLanguage('zh');
+            }
+        });
+    
+        function switchLanguage(lang) {
+            // 隐藏所有语言元素
+            document.querySelectorAll('.lang-zh, .lang-en').forEach(el => {
+                el.style.display = 'none';
+            });
+            // 显示选中语言元素
+            document.querySelectorAll('.lang-' + lang).forEach(el => {
+                el.style.display = el.tagName === 'A' ? 'inline' : 'block';
+            });
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+            
+            // 更新按钮选中状态
+            document.querySelectorAll('.lang-switch button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-switch button[onclick="switchLanguage('${lang}')"]`).classList.add('active');
+            
+            // 保存语言偏好到本地存储
+            localStorage.setItem('preferredLanguage', lang);
+        }
+    </script>
+</body>
+</html>
+
+    <!-- 页面内容... -->
+    
+    <script src="main.js"></script>
+</body>
+</html>
