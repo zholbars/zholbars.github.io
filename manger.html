@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件管理器</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .directory-tree {
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        .file-icon {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        .directory-icon {
+            color: #FFC107;
+        }
+        .file-icon {
+            color: #64B5F6;
+        }
+        .file-name {
+            flex-grow: 1;
+        }
+        .download-link {
+            color: #4CAF50;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            background-color: #f0f9f0;
+            transition: background-color 0.3s;
+        }
+        .download-link:hover {
+            background-color: #e0f2e0;
+        }
+        .subdirectory {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>文件目录浏览</h1>
+    <div class="directory-tree" id="directoryTree"></div>
+
+    <script>
+        // 目录结构数据，基于提供的工作区信息
+        const directoryStructure = {
+            name: '.',
+            isDirectory: true,
+            children: [
+                { name: 'README.md', isDirectory: false },
+                { name: 'article_reader.html', isDirectory: false },
+                { name: 'articles.html', isDirectory: false },
+                { 
+                    name: 'articles', 
+                    isDirectory: true,
+                    children: [
+                        { name: 'article_template.md', isDirectory: false },
+                        { 
+                            name: 'audio', 
+                            isDirectory: true,
+                            children: [
+                                { name: '1.mp3', isDirectory: false }
+                            ]
+                        },
+                        { name: 'example_article.md', isDirectory: false },
+                        { 
+                            name: 'images', 
+                            isDirectory: true,
+                            children: [
+                                { name: '1.png', isDirectory: false }
+                            ]
+                        },
+                        { 
+                            name: 'video', 
+                            isDirectory: true,
+                            children: [
+                                { name: '1.mp4', isDirectory: false }
+                            ]
+                        }
+                    ]
+                },
+                { name: 'font.ttf', isDirectory: false },
+                { name: 'index.html', isDirectory: false },
+                { name: 'manger.html', isDirectory: false },
+                { name: 'marked.min.js', isDirectory: false },
+                { name: 'styles.css', isDirectory: false },
+                { name: 'yizish.html', isDirectory: false }
+            ]
+        };
+
+        // 生成目录树HTML
+        function generateDirectoryHTML(item, path = '') {
+            const currentPath = path ? `${path}/${item.name}` : item.name;
+            let html = '';
+
+            // 创建文件项
+            html += `<div class="file-item">`;
+            html += `<span class="file-icon ${item.isDirectory ? 'directory-icon' : 'file-icon'}">`;
+            html += item.isDirectory ? '📂' : '📄';
+            html += `</span>`;
+            html += `<span class="file-name">${item.name}</span>`;
+
+            // 如果是文件，添加下载链接
+            if (!item.isDirectory) {
+                html += `<a href="${currentPath}" class="download-link" download>下载</a>`;
+            }
+
+            html += `</div>`;
+
+            // 如果是目录，递归生成子目录
+            if (item.isDirectory && item.children && item.children.length > 0) {
+                html += `<div class="subdirectory">`;
+                item.children.forEach(child => {
+                    html += generateDirectoryHTML(child, currentPath);
+                });
+                html += `</div>`;
+            }
+
+            return html;
+        }
+
+        // 渲染目录树
+        document.getElementById('directoryTree').innerHTML = generateDirectoryHTML(directoryStructure);
+    </script>
+</body>
+</html>
